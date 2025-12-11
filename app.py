@@ -60,7 +60,7 @@ CUSTOM_CSS = """
     
     /* Headers */
     h1, h2, h3 {
-        color: #00FFFF !important;
+        color: #EF19A3 !important;
         font-weight: 700;
         text-shadow: 0px 0px 10px rgba(0, 255, 255, 0.3);
     }
