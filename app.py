@@ -87,7 +87,7 @@ CUSTOM_CSS = """
 
     /* Sidebar Styling */
     [data-testid="stSidebar"] {
-        background-color: #11111a;
+        background-color: #FFF1FA;
         border-right: 1px solid #333;
     }
 
