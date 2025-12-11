@@ -77,156 +77,47 @@ warnings.filterwarnings('ignore')
 # ---------------------------------------------------------
 
 CUSTOM_CSS = """
-<style>
-    /* Global App Styling */
-    .stApp {
-        background-color: #0E1117;
-        color: #E6E6FA;
-        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
+<style> 
+       /* FORCE SIDEBAR RADIO BUTTON COLORS */
 
-    /* Sidebar Styling */
-    [data-testid="stSidebar"] {
-        background-color: #FFF1FA;
-        border-right: 1px solid #333;
-    }
-/* ---------------------------
-   SIDEBAR NAVIGATION COLOR FIX
-----------------------------*/
-
-/* Sidebar Title */
-[data-testid="stSidebar"] h1, 
-[data-testid="stSidebar"] h2, 
-[data-testid="stSidebar"] h3 {
-    color: #000000 !important;   /* Title Color */
+/* Change radio label text color */
+section[data-testid="stSidebar"] div[role="radiogroup"] label {
+    color: #000000 !important;
+    font-weight: 700;
 }
 
-/* Radio Label Text */
-div[role="radiogroup"] > label > div:nth-child(2) {
-    color: #000000 !important;   /* Text Color */
-    font-weight: 600;
+/* Change selected radio background */
+section[data-testid="stSidebar"] div[role="radiogroup"] label[data-checked="true"] {
+    background-color: #FFB6C1 !important; /* Light Pink */
+    border-radius: 6px;
+    padding: 4px 8px;
+    color: #000000 !important;
 }
 
-/* Radio Button Circle */
-div[role="radiogroup"] input[type="radio"] {
-    accent-color: #FF4B4B !important;   /* Circle Color */
-}
-
-/* Hover Effect */
-div[role="radiogroup"] > label:hover {
+/* Change hover background */
+section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
     background-color: #FFD6E7 !important;
     border-radius: 6px;
 }
 
-/* Selected Option */
-div[role="radiogroup"] > label[data-checked="true"] {
-    background-color: #FFB6C1 !important;
-    border-radius: 6px;
-    color: #000000 !important;
+/* Change radio circle color */
+section[data-testid="stSidebar"] div[role="radiogroup"] input[type="radio"] {
+    accent-color: #FF4B4B !important; /* Red */
 }
 
-    /* Headers */
-    h1, h2, h3 {
-        color: #000000!important;
-        font-weight: 700;
-        text-shadow: 0px 0px 10px rgba(0, 255, 255, 0.3);
-    }
+/* Fix for Streamlit new UI forcing SVG radio icons */
+section[data-testid="stSidebar"] div[role="radiogroup"] svg {
+    fill: #FF4B4B !important;   /* Unselected circle */
+    stroke: #FF4B4B !important; /* Ring */
+}
 
-    /* Custom Metrics */
-    [data-testid="stMetricValue"] {
-        color: #39FF14 !important;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    [data-testid="stMetricDelta"] {
-        color: #FFD700 !important;
-    }
+/* Selected radio circle fill */
+section[data-testid="stSidebar"] div[role="radiogroup"] label[data-checked="true"] svg {
+    fill: #FF4B4B !important;
+    stroke: #FF4B4B !important;
+}
 
-    /* Product Card */
-    .product-card {
-        background-color: #1a1a2e;
-        border: 1px solid #444;
-        border-radius: 12px;
-        padding: 18px;
-        margin-bottom: 20px;
-        transition: transform 0.25s ease, box-shadow 0.3s ease;
-    }
-
-    /* Hover Zoom */
-    .product-card:hover {
-        transform: scale(1.05);
-        border-color: #00FFFF;
-        box-shadow: 0 8px 25px rgba(0, 255, 255, 0.35);
-    }
-
-    /* Neon Glow Animation */
-    @keyframes neon-glow {
-        0% { box-shadow: 0 0 4px #00ffff; }
-        50% { box-shadow: 0 0 18px #00ffff; }
-        100% { box-shadow: 0 0 4px #00ffff; }
-    }
-    .glow {
-        animation: neon-glow 2s infinite;
-        border-radius: 12px;
-    }
-
-    /* Fade-In */
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    .fade-in {
-        animation: fadeIn 1s ease-in-out;
-    }
-
-    /* Floating Animation */
-    @keyframes float {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(-6px); }
-        100% { transform: translateY(0); }
-    }
-    .float {
-        animation: float 3s ease-in-out infinite;
-    }
-
-    /* Marquee Styling */
-    .marquee-container {
-        width: 100%;
-        background: linear-gradient(90deg, #0f0f14, #1E1E2F);
-        color: #FFD700;
-        padding: 8px 0;
-        white-space: nowrap;
-        overflow: hidden;
-        border-bottom: 2px solid #00FFFF;
-        margin-bottom: 20px;
-    }
-    .marquee-content {
-        display: inline-block;
-        padding-left: 100%;
-        animation: marquee 30s linear infinite;
-        font-family: 'Consolas', monospace;
-        font-size: 16px;
-        font-weight: bold;
-    }
-    @keyframes marquee {
-        0%   { transform: translate(0, 0); }
-        100% { transform: translate(-100%, 0); }
-    }
-
-    /* Button Styling */
-    .stButton > button {
-        background: linear-gradient(90deg, #FF4B4B, #FF9900);
-        color: white;
-        border: none;
-        padding: 10px 24px;
-        border-radius: 8px;
-        font-weight: bold;
-        transition: 0.3s ease;
-    }
-    .stButton > button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(255, 75, 75, 0.5);
-    }
+    
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
