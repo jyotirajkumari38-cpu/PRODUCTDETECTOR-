@@ -90,6 +90,40 @@ CUSTOM_CSS = """
         background-color: #FFF1FA;
         border-right: 1px solid #333;
     }
+/* ---------------------------
+   SIDEBAR NAVIGATION COLOR FIX
+----------------------------*/
+
+/* Sidebar Title */
+[data-testid="stSidebar"] h1, 
+[data-testid="stSidebar"] h2, 
+[data-testid="stSidebar"] h3 {
+    color: #000000 !important;   /* Title Color */
+}
+
+/* Radio Label Text */
+div[role="radiogroup"] > label > div:nth-child(2) {
+    color: #000000 !important;   /* Text Color */
+    font-weight: 600;
+}
+
+/* Radio Button Circle */
+div[role="radiogroup"] input[type="radio"] {
+    accent-color: #FF4B4B !important;   /* Circle Color */
+}
+
+/* Hover Effect */
+div[role="radiogroup"] > label:hover {
+    background-color: #FFD6E7 !important;
+    border-radius: 6px;
+}
+
+/* Selected Option */
+div[role="radiogroup"] > label[data-checked="true"] {
+    background-color: #FFB6C1 !important;
+    border-radius: 6px;
+    color: #000000 !important;
+}
 
     /* Headers */
     h1, h2, h3 {
