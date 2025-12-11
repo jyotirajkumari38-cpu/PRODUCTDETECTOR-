@@ -30,6 +30,38 @@ from fake_useragent import UserAgent
 
 # ---------------------------------------------------------
 # 1. PAGE CONFIGURATION & GLOBAL SETTINGS
+import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+import plotly.express as px
+import yfinance as yf
+import requests
+import time
+import random
+import warnings
+from datetime import datetime, timedelta
+
+# Machine Learning Imports
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Try importing TensorFlow/Keras for LSTM
+try:
+    from tensorflow.keras.models import Sequential
+    from tensorflow.keras.layers import LSTM, Dense, Dropout
+    HAS_TF = True
+except ImportError:
+    HAS_TF = False
+
+# Web Scraping Imports
+from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
+
+# ---------------------------------------------------------
+# PAGE CONFIG
 # ---------------------------------------------------------
 st.set_page_config(
     page_title="Group 32 - AI Capstone Super Dashboard",
@@ -41,8 +73,9 @@ st.set_page_config(
 warnings.filterwarnings('ignore')
 
 # ---------------------------------------------------------
-# 2. ADVANCED CSS STYLING
+# UPDATED CSS WITH ANIMATIONS
 # ---------------------------------------------------------
+
 CUSTOM_CSS = """
 <style>
     /* Global App Styling */
@@ -51,20 +84,20 @@ CUSTOM_CSS = """
         color: #E6E6FA;
         font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
-    
+
     /* Sidebar Styling */
     [data-testid="stSidebar"] {
         background-color: #11111a;
         border-right: 1px solid #333;
     }
-    
+
     /* Headers */
     h1, h2, h3 {
         color: #EF19A3 !important;
         font-weight: 700;
         text-shadow: 0px 0px 10px rgba(0, 255, 255, 0.3);
     }
-    
+
     /* Custom Metrics */
     [data-testid="stMetricValue"] {
         color: #39FF14 !important;
@@ -74,31 +107,54 @@ CUSTOM_CSS = """
     [data-testid="stMetricDelta"] {
         color: #FFD700 !important;
     }
-    
-    /* Card Container */
-    .card {
-        background: linear-gradient(145deg, #1E1E2F, #161625);
-        padding: 20px;
-        border-radius: 12px;
-        border: 1px solid #333;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    
+
     /* Product Card */
     .product-card {
         background-color: #1a1a2e;
         border: 1px solid #444;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 15px;
-        transition: transform 0.2s;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 20px;
+        transition: transform 0.25s ease, box-shadow 0.3s ease;
     }
+
+    /* Hover Zoom */
     .product-card:hover {
-        transform: scale(1.02);
+        transform: scale(1.05);
         border-color: #00FFFF;
+        box-shadow: 0 8px 25px rgba(0, 255, 255, 0.35);
     }
-    
+
+    /* Neon Glow Animation */
+    @keyframes neon-glow {
+        0% { box-shadow: 0 0 4px #00ffff; }
+        50% { box-shadow: 0 0 18px #00ffff; }
+        100% { box-shadow: 0 0 4px #00ffff; }
+    }
+    .glow {
+        animation: neon-glow 2s infinite;
+        border-radius: 12px;
+    }
+
+    /* Fade-In */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .fade-in {
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Floating Animation */
+    @keyframes float {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+        100% { transform: translateY(0); }
+    }
+    .float {
+        animation: float 3s ease-in-out infinite;
+    }
+
     /* Marquee Styling */
     .marquee-container {
         width: 100%;
@@ -122,7 +178,7 @@ CUSTOM_CSS = """
         0%   { transform: translate(0, 0); }
         100% { transform: translate(-100%, 0); }
     }
-    
+
     /* Button Styling */
     .stButton > button {
         background: linear-gradient(90deg, #FF4B4B, #FF9900);
@@ -131,14 +187,61 @@ CUSTOM_CSS = """
         padding: 10px 24px;
         border-radius: 8px;
         font-weight: bold;
-        transition: 0.3s;
+        transition: 0.3s ease;
     }
     .stButton > button:hover {
-        box-shadow: 0 0 15px rgba(255, 75, 75, 0.5);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(255, 75, 75, 0.5);
     }
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+
+# ---------------------------------------------------------
+# UTILITY FUNCTIONS
+# ---------------------------------------------------------
+
+@st.cache_data(ttl=300)
+def fetch_stock_data_extended(ticker, period="2y"):
+    try:
+        df = yf.download(ticker, period=period, progress=False)
+        if df.empty:
+            return pd.DataFrame()
+
+        df = df.reset_index()
+
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+
+        df['MA10'] = df['Close'].rolling(10).mean()
+        df['MA50'] = df['Close'].rolling(50).mean()
+        df['MA200'] = df['Close'].rolling(200).mean()
+
+        delta = df['Close'].diff()
+        gain = (delta.where(delta > 0, 0)).rolling(14).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
+        rs = gain / loss
+        df['RSI'] = 100 - (100 / (1 + rs))
+
+        exp12 = df['Close'].ewm(span=12, adjust=False).mean()
+        exp26 = df['Close'].ewm(span=26, adjust=False).mean()
+        df['MACD'] = exp12 - exp26
+        df['Signal_Line'] = df['MACD'].ewm(span=9, adjust=False).mean()
+
+        df['BB_Middle'] = df['Close'].rolling(20).mean()
+        df['BB_Upper'] = df['BB_Middle'] + df['Close'].rolling(20).std() * 2
+        df['BB_Lower'] = df['BB_Middle'] - df['Close'].rolling(20).std() * 2
+
+        df['Log_Ret'] = np.log(df['Close'] / df['Close'].shift(1))
+        df['Volatility'] = df['Log_Ret'].rolling(21).std() * np.sqrt(252)
+
+        df['Prediction_Target'] = df['Close'].shift(-1)
+
+        return df.dropna()
+    except Exception as e:
+        st.error(f"Error fetching data: {e}")
+        return pd.DataFrame()
+
 
 # ---------------------------------------------------------
 # 3. UTILITY FUNCTIONS (Data Fetching & Processing)
