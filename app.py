@@ -80,13 +80,13 @@ CUSTOM_CSS = """
 
 <style>
 
-/* NEW selector for latest Streamlit radio text */
-section[data-testid="stSidebar"] div[role="radiogroup"] label div[data-testid="stMarkdownContainer"] span {
+/* ⭐ Color only the radio option text */
+section[data-testid="stSidebar"] div[role="radiogroup"] div[data-testid="stRadioOption"] span {
     color: #FF5733 !important;
     font-weight: 700 !important;
 }
 
-/* Selected radio highlight */
+/* Selected option container */
 section[data-testid="stSidebar"] div[role="radiogroup"] label[data-checked="true"] {
     background-color: #FFB6C1 !important;
     border-radius: 6px;
@@ -99,12 +99,14 @@ section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
     border-radius: 6px;
 }
 
-/* Radio circle color */
+/* Bullet color */
 section[data-testid="stSidebar"] div[role="radiogroup"] svg {
     fill: #FF4B4B !important;
     stroke: #FF4B4B !important;
 }
+
 </style>
+
 """
 
 
