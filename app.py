@@ -482,7 +482,7 @@ def render_amazon_dashboard():
 
 def render_stock_predictor():
     """Module B: Advanced Stock Predictor with Random Forest"""
-    st.title("📈 Pro Stock jyoti  Analytics Suite")
+    st.title("📈 Pro Stock   Analytics Suite")
     st.markdown("Real-time data fetching, technical indicators, and Random Forest prediction.")
     
     # 1. Sidebar Controls for this module
