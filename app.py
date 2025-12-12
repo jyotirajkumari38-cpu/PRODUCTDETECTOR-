@@ -78,11 +78,9 @@ warnings.filterwarnings('ignore')
 
 CUSTOM_CSS = """
 <style> 
-       /* FORCE SIDEBAR RADIO BUTTON COLORS */
-
 /* Change radio label text color */
 section[data-testid="stSidebar"] div[role="radiogroup"] label {
-    color: #000000 !important;
+    color: #FF5733 !important;
     font-weight: 700;
 }
 
@@ -91,24 +89,24 @@ section[data-testid="stSidebar"] div[role="radiogroup"] label[data-checked="true
     background-color: #FFB6C1 !important; /* Light Pink */
     border-radius: 6px;
     padding: 4px 8px;
-    color: #000000 !important;
+    color: #FF5733 !important;
 }
 
-/* Change hover background */
+/* Hover background */
 section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
     background-color: #FFD6E7 !important;
     border-radius: 6px;
 }
 
-/* Change radio circle color */
+/* Radio circle color */
 section[data-testid="stSidebar"] div[role="radiogroup"] input[type="radio"] {
     accent-color: #FF4B4B !important; /* Red */
 }
 
-/* Fix for Streamlit new UI forcing SVG radio icons */
+/* Fix for SVG radio icons */
 section[data-testid="stSidebar"] div[role="radiogroup"] svg {
-    fill: #FF4B4B !important;   /* Unselected circle */
-    stroke: #FF4B4B !important; /* Ring */
+    fill: #FF4B4B !important;
+    stroke: #FF4B4B !important;
 }
 
 /* Selected radio circle fill */
@@ -116,9 +114,9 @@ section[data-testid="stSidebar"] div[role="radiogroup"] label[data-checked="true
     fill: #FF4B4B !important;
     stroke: #FF4B4B !important;
 }
+</style> 
+       
 
-    
-</style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
