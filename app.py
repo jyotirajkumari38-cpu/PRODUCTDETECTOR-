@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 
 # Machine Learning Imports
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler   
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 
