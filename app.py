@@ -62,7 +62,7 @@ CUSTOM_CSS =
     margin-bottom: 10px;
 }
 
-/* Hide default radio circles */
+/* Hide default radio */
 [data-testid="stSidebar"] input[type="radio"] {
     display: none;
 }
@@ -74,7 +74,7 @@ CUSTOM_CSS =
     gap: 12px;
 }
 
-/* Each nav item */
+/* Nav item */
 [data-testid="stSidebar"] div[role="radiogroup"] label {
     display: flex;
     align-items: center;
@@ -99,22 +99,21 @@ CUSTOM_CSS =
     color: #E6E6FA;
 }
 
-/* ACTIVE ITEM */
-[data-testid="stSidebar"] div[role="radiogroup"] 
+/* Active item */
+[data-testid="stSidebar"] div[role="radiogroup"]
 label:has(input:checked) {
     color: #E6E6FA;
     font-weight: 600;
 }
 
-/* ACTIVE DOT */
-[data-testid="stSidebar"] div[role="radiogroup"] 
+/* Active dot */
+[data-testid="stSidebar"] div[role="radiogroup"]
 label:has(input:checked)::before {
     background: #ff4b4b;
-    box-shadow: 0 0 8px rgba(255,75,75,0.8);
+    box-shadow: 0 0 8px rgba(255, 75, 75, 0.8);
 }
 
-
-
+# B. Sidebar Navigation
 st.sidebar.markdown("""
 <div class="nav-title">
     🚀 Navigation
@@ -134,6 +133,9 @@ page = st.sidebar.radio(
     ]
 )
 
+st.sidebar.markdown("---")
+st.sidebar.caption("System Status: ● Online")
+st.sidebar.caption(f"Last Update: {datetime.now().strftime('%H:%M:%S')}")
 
 # ---------------------------------------------------------
 # 3. UTILITY FUNCTIONS (Data Fetching & Processing)
