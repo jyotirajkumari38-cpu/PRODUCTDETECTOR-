@@ -43,8 +43,7 @@ warnings.filterwarnings('ignore')
 # ---------------------------------------------------------
 # 2. ADVANCED CSS STYLING
 # ---------------------------------------------------------
-CUSTOM_CSS = """
-
+CUSTOM_CSS =
 /* ---------- SIDEBAR NAVIGATION PANEL ---------- */
 
 .nav-title {
@@ -113,9 +112,28 @@ label:has(input:checked)::before {
     background: #ff4b4b;
     box-shadow: 0 0 8px rgba(255,75,75,0.8);
 }
-</style>
-"""
-st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+
+
+
+st.sidebar.markdown("""
+<div class="nav-title">
+    🚀 Navigation
+</div>
+<div class="nav-sub">
+    Go To Module:
+</div>
+""", unsafe_allow_html=True)
+
+page = st.sidebar.radio(
+    label="",
+    options=[
+        "Stock Predictor",
+        "Amazon Trend AI",
+        "Product Catalog",
+        "About Project"
+    ]
+)
+
 
 # ---------------------------------------------------------
 # 3. UTILITY FUNCTIONS (Data Fetching & Processing)
