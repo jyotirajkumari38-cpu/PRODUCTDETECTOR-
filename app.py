@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
-import yfinance as yf
+import yfinance as yf   
 import requests
 import time
 import random
