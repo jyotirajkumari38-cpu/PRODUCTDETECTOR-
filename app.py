@@ -43,100 +43,119 @@ warnings.filterwarnings('ignore')
 # ---------------------------------------------------------
 # 2. ADVANCED CSS STYLING
 # ---------------------------------------------------------
-CUSTOM_CSS =
-/* ---------- SIDEBAR NAVIGATION PANEL ---------- */
+# 2. ADVANCED css
 
-.nav-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 22px;
-    font-weight: 800;
-    color: #00FFFF;
-    margin-bottom: 12px;
-}
+CUSTOM_CSS = """
+<style>
+    /* Global App Styling */
+    .stApp {
+        background-color: #0E1117;
+        color: #E6E6FA;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background-color: #11111a;
+        border-right: 1px solid #333;
+    }
+    
+    /* Headers */
+    h1, h2, h3 {
+        color: #00FFFF !important;
+        font-weight: 700;
+        text-shadow: 0px 0px 10px rgba(0, 255, 255, 0.3);
+    }
+    
+    /* Custom Metrics */
+    [data-testid="stMetricValue"] {
+        color: #39FF14 !important;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    [data-testid="stMetricDelta"] {
+        color: #FFD700 !important;
+    }
+    
+    /* Card Container */
+    .card {
+        background: linear-gradient(145deg, #1E1E2F, #161625);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid #333;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    
+    /* Product Card */
+    .product-card {
+        background-color: #1a1a2e;
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        transition: transform 0.2s;
+    }
+    .product-card:hover {
+        transform: scale(1.02);
+        border-color: #00FFFF;
+    }
+    
+    /* Marquee Styling */
+    .marquee-container {
+        width: 100%;
+        background: linear-gradient(90deg, #0f0f14, #1E1E2F);
+        color: #FFD700;
+        padding: 8px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        border-bottom: 2px solid #00FFFF;
+        margin-bottom: 20px;
+    }
+    .marquee-content {
+        display: inline-block;
+        padding-left: 100%;
+        animation: marquee 30s linear infinite;
+        font-family: 'Consolas', monospace;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    @keyframes marquee {
+        0%   { transform: translate(0, 0); }
+        100% { transform: translate(-100%, 0); }
+    }
+    
+    /* Button Styling */
+    .stButton > button {
+        background: linear-gradient(90deg, #FF4B4B, #FF9900);
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    .stButton > button:hover {
+        box-shadow: 0 0 15px rgba(255, 75, 75, 0.5);
+    }
 
-.nav-sub {
-    font-size: 13px;
-    color: #7a7a8c;
-    margin-bottom: 10px;
-}
+    /* --- NEW CODE: SIDEBAR NAVIGATION TEXT COLOR --- */
+    
+    /* Target the text inside the Sidebar Radio Buttons */
+    [data-testid="stSidebar"] .stRadio p {
+        color: #F4C2C2 !important; /* Baby Pink Hex Code */
+        font-size: 18px;           /* Make text slightly larger */
+        font-weight: 600;          /* Make text bold */
+    }
 
-/* Hide default radio */
-[data-testid="stSidebar"] input[type="radio"] {
-    display: none;
-}
+    /* Optional: Change color when you hover over it */
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover p {
+        color: #FFFFFF !important; /* Turns white on hover */
+    }
 
-/* Radio container */
-[data-testid="stSidebar"] div[role="radiogroup"] {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-/* Nav item */
-[data-testid="stSidebar"] div[role="radiogroup"] label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    font-size: 15px;
-    color: #6f6f7a;
-    transition: 0.25s;
-}
-
-/* Dot */
-[data-testid="stSidebar"] div[role="radiogroup"] label::before {
-    content: "";
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #666;
-}
-
-/* Hover */
-[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-    color: #E6E6FA;
-}
-
-/* Active item */
-[data-testid="stSidebar"] div[role="radiogroup"]
-label:has(input:checked) {
-    color: #E6E6FA;
-    font-weight: 600;
-}
-
-/* Active dot */
-[data-testid="stSidebar"] div[role="radiogroup"]
-label:has(input:checked)::before {
-    background: #ff4b4b;
-    box-shadow: 0 0 8px rgba(255, 75, 75, 0.8);
-}
-
-# B. Sidebar Navigation
-st.sidebar.markdown("""
-<div class="nav-title">
-    🚀 Navigation
-</div>
-<div class="nav-sub">
-    Go To Module:
-</div>
-""", unsafe_allow_html=True)
-
-page = st.sidebar.radio(
-    label="",
-    options=[
-        "Stock Predictor",
-        "Amazon Trend AI",
-        "Product Catalog",
-        "About Project"
-    ]
-)
-
-st.sidebar.markdown("---")
-st.sidebar.caption("System Status: ● Online")
-st.sidebar.caption(f"Last Update: {datetime.now().strftime('%H:%M:%S')}")
-
+</style>
+"""
+St.mackdown (CUSTOM_CSS,unsafe_allow_html=true
 # ---------------------------------------------------------
 # 3. UTILITY FUNCTIONS (Data Fetching & Processing)
 # ---------------------------------------------------------
