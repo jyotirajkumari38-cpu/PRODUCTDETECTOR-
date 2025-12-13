@@ -113,7 +113,7 @@ label:has(input:checked)::before {
     background: #ff4b4b;
     box-shadow: 0 0 8px rgba(255,75,75,0.8);
 }
-
+</style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
