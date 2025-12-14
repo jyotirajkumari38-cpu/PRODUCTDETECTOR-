@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
-import yfinance as yf   
+import yfinance as yf
 import requests
 import time
 import random
@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 
 # Machine Learning Imports
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.preprocessing import MinMaxScaler, StandardScaler   
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 
@@ -43,8 +43,6 @@ warnings.filterwarnings('ignore')
 # ---------------------------------------------------------
 # 2. ADVANCED CSS STYLING
 # ---------------------------------------------------------
-# 2. ADVANCED css
-
 CUSTOM_CSS = """
 <style>
     /* Global App Styling */
@@ -139,23 +137,14 @@ CUSTOM_CSS = """
         box-shadow: 0 0 15px rgba(255, 75, 75, 0.5);
     }
 
-    /* --- NEW CODE: SIDEBAR NAVIGATION TEXT COLOR --- */
-    
-    /* Target the text inside the Sidebar Radio Buttons */
-    [data-testid="stSidebar"] .stRadio p {
-        color: #F4C2C2 !important; /* Baby Pink Hex Code */
-        font-size: 18px;           /* Make text slightly larger */
-        font-weight: 600;          /* Make text bold */
+   /* Sidebar radio label text color */
+    [data-testid="stSidebar"] .stRadio > div[role="radiogroup"] label p {
+        color: #ff69b4 !important;
     }
-
-    /* Optional: Change color when you hover over it */
-    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover p {
-        color: #FFFFFF !important; /* Turns white on hover */
-    }
-
 </style>
 """
-St.mackdown (CUSTOM_CSS,unsafe_allow_html=true
+st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+
 # ---------------------------------------------------------
 # 3. UTILITY FUNCTIONS (Data Fetching & Processing)
 # ---------------------------------------------------------
@@ -244,7 +233,7 @@ class AmazonTrendPredictor:
     Handles the LSTM logic for Amazon Trend Detection.
     Includes data generation, scaling, and model training.
     """
-    def __init__(self, seq_len=14):
+    def _init_(self, seq_len=14):
         self.seq_len = seq_len
         self.scaler = MinMaxScaler(feature_range=(0, 1))
         self.model = None
@@ -365,14 +354,14 @@ PRODUCT_DB = {
 def render_amazon_dashboard():
     """Module A: Amazon Trend Detector with LSTM"""
     st.title("📦 Amazon Trend Intelligence (AI Powered)")
-    st.markdown("Leveraging **LSTM Neural Networks** to forecast e-commerce demand curves.")
+    st.markdown("Leveraging *LSTM Neural Networks* to forecast e-commerce demand curves.")
 
     # 1. Configuration Panel
     col_setup, col_viz = st.columns([1, 3])
     
     with col_setup:
         st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.subheader("⚙️ Simulation Config")
+        st.subheader("⚙ Simulation Config")
         category = st.selectbox("Select Niche", list(PRODUCT_DB.keys()))
         days_hist = st.slider("Historical Data (Days)", 90, 730, 365)
         days_pred = st.slider("Forecast Horizon", 7, 60, 30)
@@ -383,7 +372,7 @@ def render_amazon_dashboard():
         st.markdown('</div>', unsafe_allow_html=True)
         
         # Team Credits (Embedded here as requested)
-        st.info("**Team 32:** Om (AI), Swati (Data), Jyoti (UI), Srishti (Test)")
+        st.info("*Team 32:* Om (AI), Swati (Data), Jyoti (UI), Srishti (Test)")
 
     with col_viz:
         if run_sim:
@@ -548,7 +537,7 @@ def render_stock_predictor():
             col_c1, col_c2 = st.columns(2)
             
             with col_c1:
-                st.markdown("**MACD Oscillator**")
+                st.markdown("*MACD Oscillator*")
                 fig_macd = go.Figure()
                 fig_macd.add_trace(go.Bar(x=df['Date'], y=df['MACD']-df['Signal_Line'], name='Hist'))
                 fig_macd.add_trace(go.Scatter(x=df['Date'], y=df['MACD'], name='MACD'))
@@ -557,7 +546,7 @@ def render_stock_predictor():
                 st.plotly_chart(fig_macd, use_container_width=True)
                 
             with col_c2:
-                st.markdown("**RSI Indicator**")
+                st.markdown("*RSI Indicator*")
                 fig_rsi = go.Figure()
                 fig_rsi.add_trace(go.Scatter(x=df['Date'], y=df['RSI'], line=dict(color='purple')))
                 fig_rsi.add_hline(y=70, line_dash="dash", line_color="red")
@@ -650,22 +639,22 @@ def render_product_catalog_advanced():
             st.write("---")
 
 def render_about_page():
-    st.title("ℹ️ About the Project")
+    st.title("ℹ About the Project")
     st.markdown("""
     ### Capstone Project - Group 32
-    This application represents a comprehensive **AI-driven market intelligence dashboard**.
+    This application represents a comprehensive *AI-driven market intelligence dashboard*.
     
     #### Key Features:
-    1.  **Stock Prediction:** Uses Random Forest Regression and advanced technical analysis (RSI, MACD, Bollinger Bands) to forecast stock movements.
-    2.  **Trend Detection:** Uses LSTM (Long Short-Term Memory) Neural Networks to simulate and predict future e-commerce demand trends.
-    3.  **Real-Time Data:** Integrates with Yahoo Finance API for live market data.
-    4.  **Product Intelligence:** A catalog system simulating price tracking across major retailers.
+    1.  *Stock Prediction:* Uses Random Forest Regression and advanced technical analysis (RSI, MACD, Bollinger Bands) to forecast stock movements.
+    2.  *Trend Detection:* Uses LSTM (Long Short-Term Memory) Neural Networks to simulate and predict future e-commerce demand trends.
+    3.  *Real-Time Data:* Integrates with Yahoo Finance API for live market data.
+    4.  *Product Intelligence:* A catalog system simulating price tracking across major retailers.
     
     #### Tech Stack:
-    * **Frontend:** Streamlit, HTML/CSS
-    * **Data Processing:** Pandas, NumPy
-    * **Visualization:** Plotly, Matplotlib
-    * **Machine Learning:** Scikit-Learn, TensorFlow (Simulated Fallback)
+    * *Frontend:* Streamlit, HTML/CSS
+    * *Data Processing:* Pandas, NumPy
+    * *Visualization:* Plotly, Matplotlib
+    * *Machine Learning:* Scikit-Learn, TensorFlow (Simulated Fallback)
     """)
     
     st.success("Built by Group 32: Om, Swati, Jyoti, Srishti")
@@ -685,8 +674,8 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # B. Sidebar Navigation
-st.sidebar.title("🚀 Navigation")
-page = st.sidebar.radio("Go To Module:", 
+page = st.sidebar.radio(
+    "Go To Module:", 
     ["Stock Predictor", "Amazon Trend AI", "Product Catalog", "About Project"]
 )
 
